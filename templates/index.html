@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>forecast app</title>
+     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap" rel="stylesheet">
+     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+</head>
+<body>
+    <form method="post">
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" placeholder="location">
+    <button type="submit">Search</button>
+    </form>
+{% if name %}
+<main class="main-container">
+
+  <div class="location-and-date">
+    <h1 class="location-and-date__location">{{ name }}, {{ country }}</h1>
+    <div>{{ daily[0]["day_week"] }} {{ daily[0]["t_date"].day}}th {{daily[0]["t_date"].strftime("%B")}}</div>
+  </div>
+
+
+  <div class="current-temperature">
+    <div class="current-temperature__icon-container">
+      <img src="{{ daily[0]['icon']}}" class="current-temperature__icon" alt="">
+    </div>
+    <div class="current-temperature__content-container">
+      <div class="current-temperature__value">{{daily[0]["current_temp"]}}&deg;</div>
+      <div class="current-temperature__summary">{{daily[0]["description"]}}</div>
+    </div>
+  </div>
+
+
+  <div class="current-stats">
+    <div>
+      <div class="current-stats__value">{{daily[0]["day"]}}&deg;</div>
+      <div class="current-stats__label">Day</div>
+      <div class="current-stats__value">{{daily[0]["night"]}}&deg;</div>
+      <div class="current-stats__label">Night</div>
+    </div>
+    <div>
+      <div class="current-stats__value">{{daily[0]["wind_speed"]}} mph</div>
+      <div class="current-stats__label">Wind</div>
+      <div class="current-stats__value">{{daily[0]["humidity"]}}</div>
+      <div class="current-stats__label">Humidity</div>
+    </div>
+  </div>
+
+
+
+  <div class="next-5-days">
+    <h2 class="next-5-days__heading">Next 7 days</h2>
+    <div class="next-5-days__container">
+
+      {%for item in daily[1:]%}
+      <div class="next-5-days__row">
+
+        <div class="next-5-days__date">
+          {{ item["day_week"] }}
+          <div class="next-5-days__label">{{ item["t_date"].day}}/{{item["t_date"].month}}</div>
+        </div>
+
+        <div class="next-5-days__low">
+          {{item["day"]}}&deg;
+          <div class="next-5-days__label">Day</div>
+        </div>
+
+        <div class="next-5-days__high">
+          {{item["night"]}}&deg;
+          <div class="next-5-days__label">Night</div>
+        </div>
+
+        <div class="next-5-days__icon">
+        <img src="{{item['icon']}}"  alt="icon">
+         <div class="next-5-days__label">{{item["description"]}}</div>
+        </div>
+
+        <div class="next-5-days__rain">
+          {{item["humidity"]}}
+          <div class="next-5-days__label">Humidity</div>
+        </div>
+
+        <div class="next-5-days__wind">
+          {{item["wind_speed"]}} mph
+          <div class="next-5-days__label">Wind</div>
+        </div>
+
+      </div>
+
+      {%endfor%}
+
+    </div>
+  </div>
+
+</main>
+{% endif %}
+</body>
+</html>
