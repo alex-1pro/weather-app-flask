@@ -7,16 +7,19 @@
      <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
 </head>
 <body>
+    <a href="/download"><button class='btn btn-default'>Download Sky img</button></a>
     <form method="post">
     <label for="location">Location:</label>
     <input type="text" id="location" name="location" placeholder="location">
     <button type="submit">Search</button>
     </form>
-{% if name %}
-<main class="main-container">
 
+{% if name %}
+
+<main class="main-container">
+<a href="/save_info"><button class='btn btn-default'>Save</button></a>
   <div class="location-and-date">
-    <h1 class="location-and-date__location">{{ name }}, {{ country }}</h1>
+    <h1 class="location-and-date__location">{{ name }}, {{ z }}</h1>
     <div>{{ daily[0]["day_week"] }} {{ daily[0]["t_date"].day}}th {{daily[0]["t_date"].strftime("%B")}}</div>
   </div>
 
